@@ -1,0 +1,39 @@
+services:
+    app:
+        build:
+            context: .
+            dockerfile: Dockerfile
+        container_name: expense-manager-app
+        restart: unless-stopped
+        working_dir: /var/www/html
+        volumes:
+            - .:/var/www/html
+        environment:
+            - DB_CONNECTION=${DB_CONNECTION}
+            - DB_HOST=${DB_HOST}
+            - DB_PORT=${DB_PORT}
+            - DB_DATABASE=${DB_DATABASE}
+            - DB_USERNAME=${DB_USERNAME}
+            - DB_PASSWORD=${DB_PASSWORD}
+        ports:
+            - "80:80"
+        networks:
+            - expense-manager-network
+
+    db:
+        image: mysql:8.0
+        container_name: expense-manager-db
+        restart: unless-stopped
+        environment:
+            - MYSQL_DATABASE=${DB_DATABASE}
+            - MYSQL_ROOT_PASSWORD=${DB_ROOT_PASSWORD}
+            - MYSQL_USER=${DB_USERNAME}
+            - MYSQL_PASSWORD=${DB_PASSWORD}
+        ports:
+            - "3306:3306"
+        networks:
+            - expense-manager-network
+
+networks:
+    expense-manager-network:
+        driver: bridge
