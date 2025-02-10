@@ -18,7 +18,7 @@
 - ```docker compose exec app php artisan migrate:fresh --seed```
 
 ## URL:
-- ```http://localhost/login```
+- ```http://127.0.0.1/login```
 
 ## Users:
 - Admin: `email` - `admin@example.com`, `password` - `password`
